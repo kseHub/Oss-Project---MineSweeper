@@ -111,7 +111,7 @@ class Board:
                     mine_count += 1
             cell.state.adjacent = mine_count
 
-        self.mains_placed = True
+        self.mines_placed = True
 
 
     def reveal(self, col: int, row: int) -> None:
