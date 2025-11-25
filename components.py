@@ -87,7 +87,7 @@ class Board:
     def place_mines(self, safe_col: int, safe_row: int) -> None:
         forbidden = set()
         forbidden.add((safe_col, safe_row))
-        for nc, nr in self.neightbors(safe_col, safe_row):
+        for nc, nr in self.neighbors(safe_col, safe_row):
             forbidden.add((nc, nr))
 
         candidates = []
