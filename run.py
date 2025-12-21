@@ -71,8 +71,8 @@ class Renderer:
                 )
         pygame.draw.rect(self.screen, config.color_grid, rect, 1)
 
-    def draw_header(self, remaining_mines: int, time_text: str) -> None:
-        """Draw the header bar containing remaining mines and elapsed time."""
+    def draw_header(self, remaining_mines: int, time_text: str, best_time: int) -> None:
+        """[이슈 #4] 남은 지뢰, 현재 시간, 최고 기록을 표시합니다."""
         pygame.draw.rect(
             self.screen,
             config.color_header,
@@ -80,11 +80,17 @@ class Renderer:
         )
         left_text = f"Mines: {remaining_mines}"
         right_text = f"Time: {time_text}"
+        # 최고 기록 표시 문구 생성
+        best_display = f"Best: {best_time if best_time < 999 else '--'}s"
+        
         left_label = self.header_font.render(left_text, True, config.color_header_text)
         right_label = self.header_font.render(right_text, True, config.color_header_text)
+        best_label = self.header_font.render(best_display, True, config.color_header_text)
+        
         self.screen.blit(left_label, (10, 12))
         self.screen.blit(right_label, (config.width - right_label.get_width() - 10, 12))
-
+        # 최고 기록을 화면 상단 중앙에 배치합니다.
+        self.screen.blit(best_label, (config.width // 2 - best_label.get_width() // 2, 12))
     def draw_result_overlay(self, text: str | None) -> None:
         """Draw a semi-transparent overlay with centered result text, if any."""
         if not text:
@@ -163,6 +169,7 @@ class Game:
         self.started = False
         self.start_ticks_ms = 0
         self.end_ticks_ms = 0
+        self.best_time = self.load_best_time() # 시작할 때 기록 로드
 
     def reset(self):
         """Reset the game state and start a new board."""
@@ -204,7 +211,7 @@ class Game:
         self.screen.fill(config.color_bg)
         remaining = max(0, config.num_mines - self.board.flagged_count())
         time_text = self._format_time(self._elapsed_ms())
-        self.renderer.draw_header(remaining, time_text)
+        self.renderer.draw_header(remaining, time_text,self.best_time)
         now = pygame.time.get_ticks()
         for r in range(self.board.rows):
             for c in range(self.board.cols):
@@ -225,9 +232,29 @@ class Game:
                 self.input.handle_mouse(event.pos, event.button)
         if (self.board.game_over or self.board.win) and self.started and not self.end_ticks_ms:
             self.end_ticks_ms = pygame.time.get_ticks()
+            
+            # [이슈 #4] 승리했을 때만 최고 기록 갱신 여부를 확인합니다.
+            if self.board.win:
+                current_duration = self._elapsed_ms() // 1000 # 초 단위 계산
+                if current_duration < self.best_time:
+                    self.save_best_time(current_duration)
         self.draw()
         self.clock.tick(config.fps)
         return True
+    
+    def load_best_time(self):
+        """파일에서 최고 기록을 읽어옴. 없으면 999를 반환"""
+        try:
+            with open("score.txt", "r") as f:
+                return int(f.read())
+        except (FileNotFoundError, ValueError):
+            return 999  # 초기 기본값
+
+    def save_best_time(self, new_time):
+        """새로운 최고 기록을 파일에 저장"""
+        with open("score.txt", "w") as f:
+            f.write(str(new_time))
+        self.best_time = new_time
 
 
 def main() -> int:
