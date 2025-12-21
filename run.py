@@ -228,6 +228,16 @@ class Game:
         self.draw()
         self.clock.tick(config.fps)
         return True
+    
+    def reset(self):
+        """[요구사항] R 키를 누르면 타이머 관련 모든 정보를 초기화"""
+        self.board = Board(config.cols, config.rows, config.num_mines)
+        self.renderer.board = self.board
+        self.highlight_targets.clear()
+        self.highlight_until_ms = 0
+        self.started = False       # 시작 여부 초기화
+        self.start_ticks_ms = 0    # 시작 시간 초기화
+        self.end_ticks_ms = 0      # 종료 시간 초기화
 
 
 def main() -> int:
