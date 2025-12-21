@@ -221,6 +221,12 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     self.reset()
+                # [이슈 #3] H 키를 누르면 힌트 칸 하나를 자동으로 오픈
+                elif event.key == pygame.K_h:
+                    hint_pos = self.board.get_hint()
+                    if hint_pos:
+                        r, c = hint_pos
+                        self.board.reveal(r, c) # 해당 칸 열기
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.input.handle_mouse(event.pos, event.button)
         if (self.board.game_over or self.board.win) and self.started and not self.end_ticks_ms:
