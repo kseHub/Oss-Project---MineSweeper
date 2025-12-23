@@ -255,7 +255,7 @@ class Game:
             config.display_dimension = (config.width, config.height)
         
             self.screen = pygame.display.set_mode(config.display_dimension)
-            self.reset() # 새로운 설정으로 Board 객체 재생성
+            self.reset() # 새로운 설정으로 Board 객체 재생성 (위쪽의 reset 호출)
 
 
 def main() -> int:
