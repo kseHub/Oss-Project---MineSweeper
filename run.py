@@ -221,6 +221,18 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     self.reset()
+
+                # [이슈 #3] H 키를 누르면 힌트 칸 하나를 자동으로 오픈
+                elif event.key == pygame.K_h:
+                    self.board.reveal_hint()
+
+                # 숫자 키 1, 2, 3으로 난이도 변경
+                elif event.key == pygame.K_1:
+                    self.set_difficulty('1')
+                elif event.key == pygame.K_2:
+                    self.set_difficulty('2')
+                elif event.key == pygame.K_3:
+                    self.set_difficulty('3')
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.input.handle_mouse(event.pos, event.button)
         if (self.board.game_over or self.board.win) and self.started and not self.end_ticks_ms:
@@ -229,15 +241,21 @@ class Game:
         self.clock.tick(config.fps)
         return True
     
-    def reset(self):
-        """[요구사항] R 키를 누르면 타이머 관련 모든 정보를 초기화"""
-        self.board = Board(config.cols, config.rows, config.num_mines)
-        self.renderer.board = self.board
-        self.highlight_targets.clear()
-        self.highlight_until_ms = 0
-        self.started = False       # 시작 여부 초기화
-        self.start_ticks_ms = 0    # 시작 시간 초기화
-        self.end_ticks_ms = 0      # 종료 시간 초기화
+    """[이슈 #2] 난이도 변경 및 보드 재생성"""
+    def set_difficulty(self, level_key):
+        if level_key in config.DIFFICULTIES:
+            settings = config.DIFFICULTIES[level_key]
+            config.cols = settings['cols']
+            config.rows = settings['rows']
+            config.num_mines = settings['mines']
+        
+            # 화면 크기 재계산 및 리사이징
+            config.width = config.margin_left + config.cols * config.cell_size + config.margin_right
+            config.height = config.margin_top + config.rows * config.cell_size + config.margin_bottom
+            config.display_dimension = (config.width, config.height)
+        
+            self.screen = pygame.display.set_mode(config.display_dimension)
+            self.reset() # 새로운 설정으로 Board 객체 재생성 (위쪽의 reset 호출)
 
 
 def main() -> int:
