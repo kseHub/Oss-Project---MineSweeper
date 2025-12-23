@@ -172,3 +172,24 @@ class Board:
             for cell in self.cells:
                 if not cell.state.is_revealed and not cell.state.is_mine:
                     cell.state.is_revealed = True
+
+    """지뢰가 없고 아직 열리지 않은 칸 중 하나를 랜덤하게 반환"""
+    def get_hint(self):
+        safe_indices = []
+    
+        # 1. enumerate를 사용하여 i를 함께 가져옵니다.
+        for i, cell in enumerate(self.cells):
+            # 2. cell.state 내부 속성을 확인합니다.
+            if not cell.state.is_mine and not cell.state.is_revealed and not cell.state.is_flagged:
+                safe_indices.append(i)
+            
+        if safe_indices:
+            # 3. 안전한 인덱스 중 하나를 랜덤으로 고릅니다.
+            random_idx = random.choice(safe_indices)
+        
+            # 4. 인덱스를 좌표 (r, c)로 변환합니다.
+            r = random_idx // self.cols
+            c = random_idx % self.cols
+            return r, c 
+        
+        return None
