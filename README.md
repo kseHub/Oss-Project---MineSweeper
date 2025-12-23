@@ -45,6 +45,15 @@
 
 <br/>
 
+## 4. high score 기록 관리 (#4)
+원활한 확인을 위해 지뢰 개수를 1개로 코드 수정하여 결과 확인.
+<img width="908" height="48" alt="image" src="https://github.com/user-attachments/assets/bd799243-a551-4ce3-8c36-2f54c98c0075" />
+
+(score.txt)
+<img width="908" height="48" alt="image" src="https://github.com/user-attachments/assets/5d83507c-f56e-4680-8ce5-b2e2f23ca7b0" />
+
+<br/>
+
 ## 5. 재시작 시 타이머 초기화 (#5)
 'R' 버튼을 눌러 게임을 재시작하면 타이머가 0으로 초기화됩니다.
 
