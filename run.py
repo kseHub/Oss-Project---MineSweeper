@@ -242,7 +242,7 @@ class Game:
         return True
     
     """[이슈 #2] 난이도 변경 및 보드 재생성"""
-    def change_difficulty(self, level_key):
+    def set_difficulty(self, level_key):
         if level_key in config.DIFFICULTIES:
             settings = config.DIFFICULTIES[level_key]
             config.cols = settings['cols']

@@ -62,6 +62,8 @@ class Board:
         self.game_over = False
         self.win = False
 
+        self.hints_left = 3
+
     def index(self, col: int, row: int) -> int:
         """Return the flat list index for (col,row)."""
         return row * self.cols + col
@@ -192,4 +194,22 @@ class Board:
             c = random_idx % self.cols
             return r, c 
         
+
+    def reveal_hint(self) -> None:
+        """아직 열리지 않은 안전한 칸 중 하나를 랜덤하게 엽니다."""
+        if self.hints_left <= 0:
+            print("No hints left!")
+            return
+
+        candidates = []
+        for cell in self.cells:
+            # 아직 안 열렸고, 지뢰가 아니고, 깃발도 없는 칸 찾기
+            if (not cell.state.is_revealed) and (not cell.state.is_mine) and (not cell.state.is_flagged):
+                candidates.append((cell.col, cell.row))
+        
+        if candidates:
+            col, row = random.choice(candidates)
+            self.reveal(col, row)
+            self.hints_left -= 1
+            print(f"Hint used! Remaining hints: {self.hints_left}")
         return None
