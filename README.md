@@ -47,7 +47,8 @@
 
 ## 4. high score 기록 관리 (#4)
 원활한 확인을 위해 지뢰 개수를 1개로 코드 수정하여 결과 확인.
-<img width="908" height="48" alt="image" src="https://github.com/user-attachments/assets/bd799243-a551-4ce3-8c36-2f54c98c0075" />
+<img width="688" height="772" alt="image" src="https://github.com/user-attachments/assets/fb40f904-52a9-48e1-b235-2588b033ce37" />
+
 
 (score.txt)
 <img width="908" height="48" alt="image" src="https://github.com/user-attachments/assets/5d83507c-f56e-4680-8ce5-b2e2f23ca7b0" />
