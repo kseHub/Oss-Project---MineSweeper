@@ -245,14 +245,14 @@ class Game:
     def load_best_time(self):
         """파일에서 최고 기록을 읽어옴. 없으면 999를 반환"""
         try:
-            with open("score.txt", "r") as f:
+            with open(config.highscore_file, "r") as f:
                 return int(f.read())
         except (FileNotFoundError, ValueError):
             return 999  # 초기 기본값
 
     def save_best_time(self, new_time):
         """새로운 최고 기록을 파일에 저장"""
-        with open("score.txt", "w") as f:
+        with open(config.highscore_file, "w") as f:
             f.write(str(new_time))
         self.best_time = new_time
 

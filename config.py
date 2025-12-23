@@ -81,3 +81,5 @@ result_overlay_alpha = 120
 # Misc
 title = "Minesweeper"
 
+highscore_file = "score.txt"
+initial_best_time = 999
