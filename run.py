@@ -221,6 +221,13 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     self.reset()
+                # 숫자 키 1, 2, 3으로 난이도 변경
+                elif event.key == pygame.K_1:
+                    self.change_difficulty('1')
+                elif event.key == pygame.K_2:
+                    self.change_difficulty('2')
+                elif event.key == pygame.K_3:
+                    self.change_difficulty('3')
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.input.handle_mouse(event.pos, event.button)
         if (self.board.game_over or self.board.win) and self.started and not self.end_ticks_ms:
@@ -228,6 +235,22 @@ class Game:
         self.draw()
         self.clock.tick(config.fps)
         return True
+    
+    """[이슈 #2] 난이도 변경 및 보드 재생성"""
+    def change_difficulty(self, level_key):
+        if level_key in config.DIFFICULTIES:
+            settings = config.DIFFICULTIES[level_key]
+            config.cols = settings['cols']
+            config.rows = settings['rows']
+            config.num_mines = settings['mines']
+        
+            # 화면 크기 재계산 및 리사이징
+            config.width = config.margin_left + config.cols * config.cell_size + config.margin_right
+            config.height = config.margin_top + config.rows * config.cell_size + config.margin_bottom
+            config.display_dimension = (config.width, config.height)
+        
+            self.screen = pygame.display.set_mode(config.display_dimension)
+            self.reset() # 새로운 설정으로 Board 객체 재생성
 
 
 def main() -> int:

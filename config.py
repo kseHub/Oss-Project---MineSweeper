@@ -81,3 +81,8 @@ result_overlay_alpha = 120
 # Misc
 title = "Minesweeper"
 
+DIFFICULTIES = {
+    '1': {'cols': 9, 'rows': 9, 'mines': 10},        # 초급
+    '2': {'cols': 16, 'rows': 16, 'mines': 40},      # 중급
+    '3': {'cols': 16, 'rows': 30, 'mines': 99}       # 고급
+}
