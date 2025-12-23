@@ -10,3 +10,8 @@
 
 <img width="687" height="1015" alt="image" src="https://github.com/user-attachments/assets/8f8dc4e7-adba-4cd4-9d1f-48aa372b9c2d" />
 (난이도 - 상) - 16 x 30, 지뢰 99개
+
+#3 힌트 기능 (#3)
+<img width="682" height="768" alt="image" src="https://github.com/user-attachments/assets/c1a41de8-7bc8-47a4-898f-bc006d1587bd" />
+-> H 누른 후
+<img width="672" height="767" alt="image" src="https://github.com/user-attachments/assets/7fb03dbb-4abf-4ec6-83d2-ab985efee366" />
