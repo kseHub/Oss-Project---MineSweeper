@@ -81,5 +81,6 @@ result_overlay_alpha = 120
 # Misc
 title = "Minesweeper"
 
+# [이슈 #4 요청사항] 하이스코어 설정 상수
 highscore_file = "score.txt"
 initial_best_time = 999
